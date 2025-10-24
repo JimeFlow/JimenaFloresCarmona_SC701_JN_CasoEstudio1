@@ -1,0 +1,50 @@
+@model IEnumerable<CasoEstudio1.Models.EjerciciosModel>
+
+@{
+    ViewData["Title"] = "Consultar solicitudes";
+    ViewData["PageTitle"] = "Consultar solicitudes";
+    ViewData["PageSubtitle"] = "Lista de solicitudes registradas";
+}
+
+@await Html.PartialAsync("_PageHeader")
+
+<div class="card">
+    <div class="card-body">
+        @if (Model == null || !Model.Any())
+        {
+            <div class="alert alert-info">No hay registros para mostrar.</div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Identificación</th>
+                            <th>Monto</th>
+                            <th>Tipo de ejercicio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Fecha.ToString("g")</td>
+                                <td>@item.Identificacion</td>
+                                <td>@item.Monto.ToString("N2")</td>
+                                <td>@item.DescripcionTipoEjercicio</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+  <script>
+    // Lugar para scripts de la página si los necesitas
+  </script>
+}

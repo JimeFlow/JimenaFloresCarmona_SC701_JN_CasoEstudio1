@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "Registrar solicitud";
+    ViewData["PageTitle"] = "Registrar solicitud";
+    ViewData["PageSubtitle"] = "Registra sesiones de ejercicio por persona";
+}
+@await Html.PartialAsync("_PageHeader")
+
+<div class="card">
+  <div class="card-body">
+    <form asp-action="Registrar" method="post" class="row g-3">
+      @Html.AntiForgeryToken()
+
+      <div class="col-md-6">
+        <label for="Identificacion" class="form-label">Identificación</label>
+        <input id="Identificacion" name="Identificacion" type="text" class="form-control" maxlength="15" required />
+      </div>
+
+      <div class="col-md-6">
+        <label for="Monto" class="form-label">Monto</label>
+        <input id="Monto" name="Monto" type="number" class="form-control" step="0.01" min="0.01" required />
+      </div>
+
+      <div class="col-12">
+        <label for="TipoDescripcion" class="form-label">Tipo de ejercicio</label>
+        <input id="TipoDescripcion" name="TipoDescripcion" type="text" class="form-control" maxlength="50" required />
+        <div class="form-text">Ej.: Resistencia, Fuerza, Flexibilidad, Meditación, Para niños, Para adultos mayores.</div>
+      </div>
+
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Registrar</button>
+        <a href="@Url.Action("Index","Home")" class="btn btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
