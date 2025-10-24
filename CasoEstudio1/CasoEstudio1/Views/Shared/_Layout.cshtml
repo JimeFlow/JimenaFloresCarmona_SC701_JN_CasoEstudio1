@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
@@ -22,13 +23,22 @@
 </head>
 
 <body>
+    @{
+        var currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+        var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+        Func<string, string, string> active = (ctrl, act) =>
+            (string.Equals(currentController, ctrl, StringComparison.OrdinalIgnoreCase)
+             && (string.IsNullOrEmpty(act) || string.Equals(currentAction, act, StringComparison.OrdinalIgnoreCase)))
+            ? "active" : "";
+    }
+
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
-            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme site-sidebar">
                 <div class="app-brand demo">
-                    <a href="index.html" class="app-brand-link">
-                        <img src="~/lib/img/logo.png" alt="" />
-                        <span class="app-brand-text demo menu-text fw-bolder ms-2">Web JN</span>
+                    <a href="@Url.Action("Index","Home")" class="app-brand-link">
+                        <img src="~/lib/img/logo.png" alt="" class="brand-logo" />
+                        <span class="app-brand-text demo menu-text fw-bolder ms-2">EC1 JN</span>
                     </a>
 
                     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -39,150 +49,75 @@
                 <div class="menu-inner-shadow"></div>
 
                 <ul class="menu-inner py-1">
-                    <li class="menu-item">
-                        <a href="index.html" class="menu-link">
+                    <li class="menu-item @(active("Home","Index"))">
+                        <a href="@Url.Action("Index","Home")" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                            <div data-i18n="Analytics">Dashboard</div>
+                            <div data-i18n="Analytics">Inicio</div>
                         </a>
                     </li>
 
-                    <li class="menu-item active open">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-layout"></i>
-                            <div data-i18n="Layouts">Layouts</div>
-                        </a>
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Ejercicios</span>
+                    </li>
 
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="layouts-without-menu.html" class="menu-link">
-                                    <div data-i18n="Without menu">Without menu</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="layouts-without-navbar.html" class="menu-link">
-                                    <div data-i18n="Without navbar">Without navbar</div>
-                                </a>
-                            </li>
-                            <li class="menu-item active">
-                                <a href="layouts-container.html" class="menu-link">
-                                    <div data-i18n="Container">Container</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="layouts-fluid.html" class="menu-link">
-                                    <div data-i18n="Fluid">Fluid</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="layouts-blank.html" class="menu-link">
-                                    <div data-i18n="Blank">Blank</div>
-                                </a>
-                            </li>
-                        </ul>
+                    <li class="menu-item @(active("Home","Registrar"))">
+                        <a href="@Url.Action("Registrar","Home")" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-plus-circle"></i>
+                            <div>Registrar solicitud</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item @(active("Home","Consultar"))">
+                        <a href="@Url.Action("Consultar","Home")" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                            <div>Consultar solicitudes</div>
+                        </a>
                     </li>
 
                     <li class="menu-header small text-uppercase">
                         <span class="menu-header-text">Pages</span>
                     </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div data-i18n="Account Settings">Account Settings</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="pages-account-settings-account.html" class="menu-link">
-                                    <div data-i18n="Account">Account</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="pages-account-settings-notifications.html" class="menu-link">
-                                    <div data-i18n="Notifications">Notifications</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="pages-account-settings-connections.html" class="menu-link">
-                                    <div data-i18n="Connections">Connections</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
             </aside>
             <div class="layout-page">
 
-                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme site-navbar"
                      id="layout-navbar">
                     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
                         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
                             <i class="bx bx-menu bx-sm"></i>
                         </a>
                     </div>
-
-                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                        <div class="navbar-nav align-items-center">
-                            <div class="nav-item d-flex align-items-center">
-                                <i class="bx bx-search fs-4 lh-0"></i>
-                                <input type="text"
-                                       class="form-control border-0 shadow-none"
-                                       placeholder="Search..."
-                                       aria-label="Search..." />
-                            </div>
-                        </div>
-
-                        <ul class="navbar-nav flex-row align-items-center ms-auto">
-
-                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                                    User
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <div class="d-flex">
-                                                <div class="flex-grow-1 text-center">
-                                                    <span class="fw-semibold d-block">Perfil</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bx bx-user me-2"></i>
-                                            <span class="align-middle">Perfil</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bx bx-cog me-2"></i>
-                                            <span class="align-middle">Seguridad</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="auth-login-basic.html">
-                                            <i class="bx bx-power-off me-2"></i>
-                                            <span class="align-middle">Cerrar Sesión</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
                 </nav>
 
-                <div class="content-wrapper">
+                <main class="content-wrapper">
                     <div class="container-xxl flex-grow-1 container-p-y">
+                        @{
+                            var successMsg = TempData["Success"] as string;
+                            var errorMsg = TempData["Error"] as string;
+                        }
+
+                        @if (!string.IsNullOrEmpty(successMsg))
+                        {
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                @successMsg
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        }
+
+                        @if (!string.IsNullOrEmpty(errorMsg))
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                @errorMsg
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        }
+
                         @RenderBody()
                     </div>
                     @await RenderSectionAsync("Scripts", required: false)
 
-                    <footer class="content-footer footer bg-footer-theme">
+                    <footer class="content-footer footer bg-footer-theme site-footer">
                         <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
                             <div class="mb-2 mb-md-0">
                                 © @DateTime.Now.Year, ThemeSelection
@@ -191,7 +126,7 @@
                     </footer>
 
                     <div class="content-backdrop fade"></div>
-                </div>
+                </main>
             </div>
         </div>
 
@@ -202,9 +137,10 @@
     <script src="~/lib/js/popper.js"></script>
     <script src="~/lib/js/bootstrap.js"></script>
     <script src="~/lib/js/perfect-scrollbar.js"></script>
-    <script src="~/lib/js/menu.js"></script>
+    <script src="~/lib/js/menu.js"></script>        
     <script src="~/lib/js/main.js"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
 </body>
+
 </html>

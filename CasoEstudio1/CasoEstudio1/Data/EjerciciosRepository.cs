@@ -21,7 +21,7 @@ namespace CasoEstudio1.Data
             p.Add("@Monto", model.Monto, DbType.Decimal);
             p.Add("@DescripcionTipoEjercicio", model.DescripcionTipoEjercicio, DbType.String);
 
-            // sp returns a single-row with Result integer
+            // SP returns a single-row with Result integer
             var result = await conn.QueryFirstOrDefaultAsync<int>("InsertEjercicio_SP", p, commandType: CommandType.StoredProcedure);
 
             return result switch
@@ -33,10 +33,10 @@ namespace CasoEstudio1.Data
             };
         }
 
-        public async Task<IEnumerable<EjercicioCreateModel>> GetAllAsync()
+        public async Task<IEnumerable<EjerciciosModel>> GetAllAsync()
         {
             using var conn = _context.CreateConnection();
-            var items = await conn.QueryAsync<EjercicioCreateModel>("GetEjercicios_SP", commandType: CommandType.StoredProcedure);
+            var items = await conn.QueryAsync<EjerciciosModel>("GetEjercicios_SP", commandType: CommandType.StoredProcedure);
             return items;
         }
     }

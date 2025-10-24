@@ -11,10 +11,11 @@ namespace CasoEstudio1.Data
         public DapperContext(IConfiguration configuration)
         {
             _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("CasoEstudio");
+            _connectionString = _configuration.GetConnectionString("CasoEstudio") 
+                ?? throw new InvalidOperationException("Connection string 'CasoEstudio' not found in configuration (appsettings.json).");
         }
 
         public IDbConnection CreateConnection()
-            => new SqlConnection(_connectionString);  
+            => new SqlConnection(_connectionString);
     }
 }
